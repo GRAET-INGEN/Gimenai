@@ -1,0 +1,17 @@
+{
+  "name": "wormgpt-ultra",
+  "version": "1.5.0",
+  "description": "WhatsApp Ultimate Crash Bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.6.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "pino": "^8.19.0",
+    "fs-extra": "^11.2.0"
+  }
+}
+
